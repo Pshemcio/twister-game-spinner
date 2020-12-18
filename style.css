@@ -32,7 +32,14 @@ input[type=number] {
     place-content: center;
 }
 
-#spin,
+.controls {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-top: 4px;
+}
+
+.controls button,
 input {
     background-color: transparent;
     padding: 1rem;
@@ -46,18 +53,21 @@ input {
     transition: background-color .4s;
 }
 
-#spin::placeholder,
+.controls button::placeholder,
 input::placeholder {
     color: rgba(255, 255, 255, 0.6);
 }
 
-#spin {
+.controls button {
     display: block;
     width: 10rem;
     cursor: pointer;
+    flex-basis: 30%;
+    margin: 0;
 }
 
-#spin:hover,
+.controls button:hover,
+.controls button:focus,
 input:focus {
     background-color: rgba(255, 255, 255, 0.3);
 }

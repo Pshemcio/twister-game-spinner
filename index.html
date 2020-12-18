@@ -15,20 +15,24 @@
     <div class="wrapper">
         <div class="container">
             <div class="player-info">
-                <p id="error-msg"></p>
+                <p id="error-msg" class="js-reset"></p>
                 <input id="username-input" type="text" placeholder="Wpisz imię gracza">
             </div>
             <div class="interval-input">
                 <input id="time-input" type="number" placeholder="Podaj czas rundy">
             </div>
-            <button id="spin">Start!</button>
+            <div class="controls">
+                <button id="start">Start!</button>
+                <button id="stop">Stop</button>
+                <button id="reset">Reset</button>
+            </div>
         </div>
-        <p id="username-display" class="username">Basia</p>
-        <p id="info-display" class="info"> lewa ręka na niebieski</p>
-        <ul class="players">
+        <p id="username-display" class="username js-reset"></p>
+        <p id="info-display" class="info js-reset"></p>
+        <ul class="players-list">
         </ul>
         <p class="time-stamp">
-            <span id="timer"></span> sekund
+            <span id="timer" class="js-reset"></span><span id="units" class="js-reset"></span>
         </p>
     </div>
     <script src="main.js"></script>
