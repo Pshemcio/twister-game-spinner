@@ -32,7 +32,7 @@ input[type=number] {
     place-content: center;
 }
 
-button,
+#spin,
 input {
     background-color: transparent;
     padding: 1rem;
@@ -46,18 +46,18 @@ input {
     transition: background-color .4s;
 }
 
-button::placeholder,
+#spin::placeholder,
 input::placeholder {
     color: rgba(255, 255, 255, 0.6);
 }
 
-button {
+#spin {
     display: block;
     width: 10rem;
     cursor: pointer;
 }
 
-button:hover,
+#spin:hover,
 input:focus {
     background-color: rgba(255, 255, 255, 0.3);
 }
@@ -80,6 +80,10 @@ ul,
     top: 20vh;
     width: 100%;
     font-size: 5rem;
+}
+
+.player-info {
+    position: relative;
 }
 
 .username {
@@ -107,6 +111,18 @@ li {
     right: 10rem;
     font-size: 5rem;
     text-transform: lowercase;
+}
+
+.error {
+    border-color: violet;
+    box-shadow: 0 0 2px 2px violet;
+}
+
+#error-msg {
+    position: absolute;
+    top: -3rem;
+    color: rgb(253, 186, 253);
+    font-size: 2rem;
 }
 
 @media (min-width:1500px) {
@@ -149,10 +165,14 @@ li {
     }
 
     .info {
-        top: 17vh;
+        top: 13vh;
     }
 
     .username {
-        top: 2vh;
+        top: 0;
+    }
+
+    #error-msg {
+        top: -2rem;
     }
 }
