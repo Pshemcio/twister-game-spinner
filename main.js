@@ -4,7 +4,7 @@ window.addEventListener('DOMContentLoaded', () => {
     timeInput.addEventListener('keyup', addTime);
     players.addEventListener('click', removeUser);
     controls.addEventListener('click', handleBtnClick);
-
+    prepareSpeech();
 });
 
 const usernameInput = document.getElementById('username-input');
@@ -17,12 +17,15 @@ const errorMsg = document.getElementById('error-msg');
 const timeStamp = document.querySelector('.time-stamp');
 const units = document.getElementById('units');
 const controls = document.querySelector('.controls');
+const voiceSelect = document.getElementById('voice-select');
+const synth = window.speechSynthesis;
 
-const dataObj = {
+let dataObj = {
     players: [],
     colors: ['zielony', 'żółty', 'niebieski', 'czerwony'],
     bodyParts: ['lewa ręka', 'prawa ręka', 'lewa noga', 'prawa noga'],
-    time: 0
+    time: 0,
+    voices: []
 };
 
 let $timerInterval;
@@ -170,6 +173,7 @@ const handleStart = button => {
 
         usernameDisplay.textContent = dataObj.players[playerIndex++];
         infoDisplay.textContent = `${dataObj.bodyParts[randomNum1]} na ${dataObj.colors[randomNum2]}`;
+        handleSpeech(usernameDisplay.textContent, infoDisplay.textContent);
     }, spinInterval);
 };
 
@@ -197,59 +201,36 @@ const handleReset = () => {
     clearInterval($timerInterval);
 };
 
+const prepareSpeech = () => {
+    function populateVoiceList() {
+        voices = synth.getVoices();
 
+        for (let i = 0; i < voices.length; i++) {
+            let option = document.createElement('option');
+            let text = voices[i].name.slice(7) + ' (' + voices[i].lang + ')';
 
+            option.textContent = text;
+            console.log(voices[i].name.slice(7));
 
-// const handleSpeech = () => {
-//     var synth = window.speechSynthesis;
+            option.setAttribute('data-lang', voices[i].lang);
+            option.setAttribute('data-name', voices[i].name);
+            voiceSelect.appendChild(option);
+        }
+    }
 
-//     var inputForm = document.querySelector('form');
-//     var inputTxt = document.querySelector('.txt');
-//     var voiceSelect = document.querySelector('select');
+    populateVoiceList();
+    if (speechSynthesis.onvoiceschanged !== undefined) {
+        speechSynthesis.onvoiceschanged = populateVoiceList;
+    };
+};
 
-//     var pitch = document.querySelector('#pitch');
-//     var pitchValue = document.querySelector('.pitch-value');
-//     var rate = document.querySelector('#rate');
-//     var rateValue = document.querySelector('.rate-value');
-
-//     var voices = [];
-
-//     function populateVoiceList() {
-//         voices = synth.getVoices();
-
-//         for (var i = 0; i < voices.length; i++) {
-//             var option = document.createElement('option');
-//             option.textContent = voices[i].name + ' (' + voices[i].lang + ')';
-
-//             if (voices[i].default) {
-//                 option.textContent += ' -- DEFAULT';
-//             }
-
-//             option.setAttribute('data-lang', voices[i].lang);
-//             option.setAttribute('data-name', voices[i].name);
-//             voiceSelect.appendChild(option);
-//         }
-//     }
-
-//     populateVoiceList();
-//     if (speechSynthesis.onvoiceschanged !== undefined) {
-//         speechSynthesis.onvoiceschanged = populateVoiceList;
-//     }
-
-//     inputForm.onsubmit = function (event) {
-//         event.preventDefault();
-
-//         var utterThis = new SpeechSynthesisUtterance(inputTxt.value);
-//         var selectedOption = voiceSelect.selectedOptions[0].getAttribute('data-name');
-//         for (var i = 0; i < voices.length; i++) {
-//             if (voices[i].name === selectedOption) {
-//                 utterThis.voice = voices[i];
-//             };
-//         };
-//         utterThis.pitch = pitch.value;
-//         utterThis.rate = rate.value;
-//         synth.speak(utterThis);
-
-//         inputTxt.blur();
-//     };
-// };
+const handleSpeech = (name, order) => {
+    let utterThis = new SpeechSynthesisUtterance(`${name}, ${order}`);
+    let selectedOption = voiceSelect.selectedOptions[0].getAttribute('data-name');
+    for (let i = 0; i < voices.length; i++) {
+        if (voices[i].name === selectedOption) {
+            utterThis.voice = voices[i];
+        };
+    };
+    synth.speak(utterThis);
+};

@@ -141,6 +141,31 @@ li {
     opacity: .9;
 }
 
+select {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    text-indent: 1px;
+}
+
+#voice-select {
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-color: rgba(255, 255, 255, 0.1);
+    border: none;
+    padding: 10px;
+    border-radius: 20px;
+    color: #333;
+}
+
+#voice-select:focus {
+    outline: none;
+}
+
+#voice-select option {
+    background-color: transparent;
+}
+
 @media (min-width:1500px) {
     :root {
         font-size: .8vw;
