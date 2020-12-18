@@ -111,6 +111,8 @@ li {
     right: 10rem;
     font-size: 5rem;
     text-transform: lowercase;
+    opacity: 0;
+    transition: opacity .4s;
 }
 
 .error {
@@ -123,6 +125,10 @@ li {
     top: -3rem;
     color: rgb(253, 186, 253);
     font-size: 2rem;
+}
+
+.active {
+    opacity: .9;
 }
 
 @media (min-width:1500px) {

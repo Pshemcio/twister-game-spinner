@@ -14,12 +14,13 @@ const spinBtn = document.getElementById('spin');
 const players = document.querySelector('.players');
 const timer = document.getElementById('timer');
 const errorMsg = document.getElementById('error-msg');
+const timeStamp = document.querySelector('.time-stamp');
 
 const dataObj = {
     players: [],
     colors: ['zielony', 'żółty', 'niebieski', 'czerwony'],
     bodyParts: ['lewa ręka', 'prawa ręka', 'lewa noga', 'prawa noga'],
-    time: 5
+    time: 0
 };
 
 const onlyNumbers = input => {
@@ -36,13 +37,26 @@ const checkLength = (input, max) => {
 };
 
 const addTime = input => {
-    if (checkLength(input, 3) === false) {
+    const minTime = 1;
+
+    if (input.target.value < minTime || input.target.value >= 100) {
+        input.target.classList.add('error');
+        errorMsg.textContent = 'Niedozwolona wartość';
+        if (input.target.value < minTime) {
+            errorMsg.textContent = `Minimalna wartość to ${minTime}s`;
+        }
         return;
     };
+
+    input.target.classList.remove('error');
+    errorMsg.textContent = '';
 
     if (input.key === 'Enter') {
         dataObj.time = parseInt(input.target.value);
         timer.textContent = dataObj.time;
+        input.target.value = '';
+        errorMsg.textContent = '';
+        timeStamp.classList.add('active');
     };
 };
 
@@ -93,6 +107,34 @@ const removeUser = user => {
     errorMsg.textContent = '';
 };
 
-const twisterSpin = () => {
-    console.log(dataObj);
+const twisterSpin = button => {
+    if (dataObj.players.length === 0) {
+        errorMsg.textContent = 'Dodaj graczy!';
+        return;
+    } else if (dataObj.time === 0) {
+        errorMsg.textContent = 'Dodaj czas!';
+        return;
+    };
+
+    if (button.target.classList.contains('active')) {
+        return;
+    };
+
+    button.target.classList.add('active');
+
+    const spinInterval = dataObj.time * 1000;
+
+    let playerIndex = 0;
+
+    setInterval(() => {
+        let randomNum1 = Math.floor((Math.random() * 4));
+        let randomNum2 = Math.floor((Math.random() * 4));
+
+        if (playerIndex >= dataObj.players.length) {
+            playerIndex = 0;
+        };
+
+        usernameDisplay.textContent = dataObj.players[playerIndex++];
+        infoDisplay.textContent = `${dataObj.bodyParts[randomNum1]} na ${dataObj.colors[randomNum2]}`;
+    }, spinInterval);
 };
