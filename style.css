@@ -68,7 +68,8 @@ input {
 
 ul,
 .info,
-.time-stamp {
+.time-stamp,
+.username {
     position: absolute;
     text-align: center;
     text-transform: uppercase;
@@ -78,7 +79,14 @@ ul,
 .info {
     top: 20vh;
     width: 100%;
-    font-size: 4rem;
+    font-size: 5rem;
+}
+
+.username {
+    top: 8vh;
+    width: 100%;
+    font-size: 7rem;
+    color: rgba(24, 161, 240, 0.616);
 }
 
 ul {
@@ -91,6 +99,7 @@ ul {
 
 li {
     text-align: left;
+    cursor: pointer;
 }
 
 .time-stamp {
@@ -98,6 +107,12 @@ li {
     right: 10rem;
     font-size: 5rem;
     text-transform: lowercase;
+}
+
+@media (min-width:1500px) {
+    :root {
+        font-size: .8vw;
+    }
 }
 
 @media (max-width:1200px) {
@@ -121,5 +136,23 @@ li {
 
     .time-stamp {
         font-size: 6rem;
+    }
+}
+
+@media (max-width:1000px) and (orientation:landscape) {
+    :root {
+        font-size: 1.1vw;
+    }
+
+    input {
+        width: 60vw;
+    }
+
+    .info {
+        top: 17vh;
+    }
+
+    .username {
+        top: 2vh;
     }
 }
