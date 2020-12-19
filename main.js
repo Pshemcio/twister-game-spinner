@@ -5,7 +5,7 @@ window.addEventListener('DOMContentLoaded', () => {
     document.body.addEventListener('click', handleClick);
 
     setTimeout(() => {
-        prepareSpeech();
+        populateVoiceList()
     }, 1000);
 });
 
@@ -223,28 +223,27 @@ const selectVoice = item => {
     langBtn.innerText = item.target.getAttribute('data-lang').slice(3,)
 };
 
-const prepareSpeech = () => {
-    function populateVoiceList() {
-        voices = synth.getVoices();
+function populateVoiceList() {
+    voices = synth.getVoices();
 
-        for (let i = 0; i < voices.length; i++) {
-            if (langBtn.getAttribute('data-name') === null) {
-                langBtn.setAttribute('data-name', voices[0].name);
-            };
-
-            let option = document.createElement('li');
-            let text = voices[i].name.slice(7) + ' (' + voices[i].lang + ')';
-
-            option.textContent = text;
-            console.log(voices[i].name.slice(7));
-
-            option.setAttribute('data-lang', voices[i].lang);
-            option.setAttribute('data-name', voices[i].name);
-            voiceSelect.appendChild(option);
+    for (let i = 0; i < voices.length; i++) {
+        if (langBtn.getAttribute('data-name') === null) {
+            langBtn.setAttribute('data-name', voices[0].name);
         };
+
+        let option = document.createElement('li');
+        let text = voices[i].name.slice(7) + ' (' + voices[i].lang + ')';
+
+        option.textContent = text;
+        console.log(voices[i].name.slice(7));
+
+        option.setAttribute('data-lang', voices[i].lang);
+        option.setAttribute('data-name', voices[i].name);
+        voiceSelect.appendChild(option);
     };
 
-    populateVoiceList();
+    alert(window.innerWidth);
+    alert(window.innerHeight);
 };
 
 const handleSpeech = (name, order) => {

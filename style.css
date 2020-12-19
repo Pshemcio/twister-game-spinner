@@ -35,6 +35,7 @@ button>* {
 }
 
 .wrapper {
+    position: relative;
     height: 100vh;
     width: 100%;
     background: -webkit-gradient(linear, left top, left bottom, from(rgba(0, 0, 0, 0.1)), to(rgba(0, 0, 0, .7))), url(img/main-bg.png);
@@ -253,7 +254,7 @@ li {
     right: -100vw;
     font-size: 1.7rem;
     color: white;
-    background: rgba(0, 0, 0, 0.3);
+    background: rgba(0, 0, 0, 0.4);
     padding: 2rem;
 }
 
@@ -285,8 +286,8 @@ ol li {
 #voice-select.active,
 #info.active {
     opacity: 1;
-    -webkit-backdrop-filter: blur(3px);
-    backdrop-filter: blur(3px);
+    -webkit-backdrop-filter: blur(2px);
+    backdrop-filter: blur(2px);
 }
 
 #voice-select.active {
@@ -306,7 +307,7 @@ ol li {
     place-content: center;
     text-align: center;
     padding: 1rem;
-    background: rgba(0, 0, 0, 0.3);
+    background: rgba(0, 0, 0, 0.4);
     -webkit-transition: background .5s;
     -o-transition: background .5s;
     transition: background .5s;
@@ -361,6 +362,15 @@ ol li {
 @media (max-width:500px) {
     :root {
         font-size: 1.8vw;
+    }
+
+    #voice-select {
+        overflow-y: scroll;
+    }
+
+    #voice-select>* {
+        font-size: 3rem;
+        flex-basis: 100%;
     }
 }
 
