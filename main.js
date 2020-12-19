@@ -215,6 +215,22 @@ const showHiddenMenu = button => {
     }, 400);
 };
 
+const userSoundAgreement = btn => {
+    if (hasEnabledVoice) {
+        return;
+    };
+
+    speechSynthesis.addEventListener('voiceschanged', populateVoiceList);
+
+    let lecture = new SpeechSynthesisUtterance();
+    lecture.text = 'Dzięki, możemy grać!'
+    speechSynthesis.speak(lecture);
+    hasEnabledVoice = true;
+    btn.target.classList.remove('active');
+    btn.target.style.display = 'none';
+    langBtn.classList.add('active');
+};
+
 function populateVoiceList() {
     if ($voices.length > 0) {
         return;
@@ -223,11 +239,6 @@ function populateVoiceList() {
     $voices = speechSynthesis.getVoices();
 
     $voices.forEach(voice => {
-        if (langBtn.getAttribute('data-name') === null) {
-            langBtn.setAttribute('data-name', $voices[0].name);
-            langBtn.classList.add('active');
-        };
-
         let option = document.createElement('li');
         let text = `${voice.name.slice(7)}  (${voice.lang})`;
 
@@ -241,10 +252,10 @@ function populateVoiceList() {
 
 const selectVoice = item => {
     langBtn.setAttribute('data-name', item.target.getAttribute('data-name'));
-    voiceSelect.classList.remove('active');
     langBtn.style.display = 'block';
     langBtn.classList.add('active');
     langBtn.innerText = item.target.getAttribute('data-lang').slice(3,)
+    voiceSelect.classList.remove('active');
 };
 
 const handleSpeech = (name, order) => {
@@ -255,9 +266,9 @@ const handleSpeech = (name, order) => {
     for (let i = 0; i < $voices.length; i++) {
         if ($voices[i].name === selectedOption) {
             utterThis.voice = $voices[i];
+            speechSynthesis.speak(utterThis);
         };
     };
-    speechSynthesis.speak(utterThis);
 };
 
 const hideMenu = menu => {
@@ -303,19 +314,4 @@ const handleClick = clickTarget => {
             };
             break;
     };
-};
-
-const userSoundAgreement = btn => {
-    if (hasEnabledVoice) {
-        return;
-    };
-
-    let lecture = new SpeechSynthesisUtterance();
-    lecture.volume = 1;
-    lecture.text = 'Dzięki, możemy grać!'
-    speechSynthesis.speak(lecture);
-    hasEnabledVoice = true;
-    speechSynthesis.addEventListener('voiceschanged', populateVoiceList);
-    btn.target.classList.remove('active');
-    btn.target.style.display = 'none';
 };
