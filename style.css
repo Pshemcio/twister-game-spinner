@@ -1,6 +1,14 @@
+/*
+* Prefixed by https://autoprefixer.github.io
+* PostCSS: v7.0.29,
+* Autoprefixer: v9.7.6
+* Browsers: last 4 version
+*/
+
 * {
     padding: 0;
     margin: 0;
+    -webkit-box-sizing: border-box;
     box-sizing: border-box;
     font-family: 'Montserrat', sans-serif;
 }
@@ -29,16 +37,26 @@ button>* {
 .wrapper {
     height: 100vh;
     width: 100%;
+    background: -webkit-gradient(linear, left top, left bottom, from(rgba(0, 0, 0, 0.1)), to(rgba(0, 0, 0, .7))), url(img/main-bg.png);
+    background: -o-linear-gradient(rgba(0, 0, 0, 0.1), rgba(0, 0, 0, .7)), url(img/main-bg.png);
     background: linear-gradient(rgba(0, 0, 0, 0.1), rgba(0, 0, 0, .7)), url(img/main-bg.png);
     background-size: cover;
     background-position: center;
+    display: -ms-grid;
     display: grid;
     place-content: center;
 }
 
 #controls {
+    display: -webkit-box;
+    display: -ms-flexbox;
     display: flex;
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: normal;
+    -ms-flex-direction: row;
     flex-direction: row;
+    -webkit-box-pack: justify;
+    -ms-flex-pack: justify;
     justify-content: space-between;
     margin-top: 4px;
 }
@@ -55,7 +73,29 @@ input,
     font-size: 2rem;
     color: rgba(255, 255, 255);
     text-transform: uppercase;
+    -webkit-transition: background-color .4s;
+    -o-transition: background-color .4s;
     transition: background-color .4s;
+}
+
+#controls button::-webkit-input-placeholder,
+input::-webkit-input-placeholder {
+    color: rgba(255, 255, 255, 0.6);
+}
+
+#controls button::-moz-placeholder,
+input::-moz-placeholder {
+    color: rgba(255, 255, 255, 0.6);
+}
+
+#controls button:-ms-input-placeholder,
+input:-ms-input-placeholder {
+    color: rgba(255, 255, 255, 0.6);
+}
+
+#controls button::-ms-input-placeholder,
+input::-ms-input-placeholder {
+    color: rgba(255, 255, 255, 0.6);
 }
 
 #controls button::placeholder,
@@ -67,6 +107,7 @@ input::placeholder {
     display: block;
     width: 10rem;
     cursor: pointer;
+    -ms-flex-preferred-size: 30%;
     flex-basis: 30%;
     margin: 0;
 }
@@ -130,11 +171,14 @@ li {
     font-size: 5rem;
     text-transform: lowercase;
     opacity: 0;
+    -webkit-transition: opacity .4s;
+    -o-transition: opacity .4s;
     transition: opacity .4s;
 }
 
 .error {
     border-color: violet;
+    -webkit-box-shadow: 0 0 2px 2px violet;
     box-shadow: 0 0 2px 2px violet;
 }
 
@@ -158,6 +202,8 @@ li {
     height: 6rem;
     cursor: pointer;
     opacity: 0;
+    -webkit-transition: opacity .3s;
+    -o-transition: opacity .3s;
     transition: opacity .3s;
 }
 
@@ -181,14 +227,25 @@ li {
     width: 50%;
     height: 100vh;
     opacity: 0;
+    -webkit-transition: opacity .4s, left .4s .1s, right .4s .1s, -webkit-backdrop-filter .4s .35s;
+    transition: opacity .4s, left .4s .1s, right .4s .1s, -webkit-backdrop-filter .4s .35s;
+    -o-transition: opacity .4s, left .4s .1s, right .4s .1s, backdrop-filter .4s .35s;
     transition: opacity .4s, left .4s .1s, right .4s .1s, backdrop-filter .4s .35s;
+    transition: opacity .4s, left .4s .1s, right .4s .1s, backdrop-filter .4s .35s, -webkit-backdrop-filter .4s .35s;
 }
 
 #voice-select {
     left: -100vw;
+    display: -webkit-box;
+    display: -ms-flexbox;
     display: flex;
+    -ms-flex-wrap: wrap;
     flex-wrap: wrap;
+    -webkit-box-pack: justify;
+    -ms-flex-pack: justify;
     justify-content: space-between;
+    -webkit-box-align: stretch;
+    -ms-flex-align: stretch;
     align-items: stretch;
 }
 
@@ -228,6 +285,7 @@ ol li {
 #voice-select.active,
 #info.active {
     opacity: 1;
+    -webkit-backdrop-filter: blur(3px);
     backdrop-filter: blur(3px);
 }
 
@@ -241,12 +299,16 @@ ol li {
 
 #voice-select>* {
     font-size: 1.6rem;
+    -ms-flex-preferred-size: calc(100%/3);
     flex-basis: calc(100%/3);
+    display: -ms-grid;
     display: grid;
     place-content: center;
     text-align: center;
     padding: 1rem;
     background: rgba(0, 0, 0, 0.3);
+    -webkit-transition: background .5s;
+    -o-transition: background .5s;
     transition: background .5s;
 }
 
@@ -291,6 +353,7 @@ ol li {
 
     #voice-select>* {
         font-size: 1.5rem;
+        -ms-flex-preferred-size: calc(100%/2);
         flex-basis: calc(100%/2);
     }
 }
@@ -332,6 +395,8 @@ ol li {
 
     #players-list {
         bottom: 2rem;
+        display: -webkit-box;
+        display: -ms-flexbox;
         display: flex;
     }
 
@@ -340,7 +405,12 @@ ol li {
     }
 
     #info {
+        display: -webkit-box;
+        display: -ms-flexbox;
         display: flex;
+        -webkit-box-orient: vertical;
+        -webkit-box-direction: normal;
+        -ms-flex-flow: column wrap;
         flex-flow: column wrap;
         overflow-y: scroll;
     }
