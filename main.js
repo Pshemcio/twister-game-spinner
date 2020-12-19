@@ -315,8 +315,7 @@ const userSoundAgreement = btn => {
     lecture.text = 'Dzięki, możemy grać!'
     speechSynthesis.speak(lecture);
     hasEnabledVoice = true;
-    console.log('dziala')
     speechSynthesis.addEventListener('voiceschanged', populateVoiceList);
-    btn.target.classList.remove('avtive');
+    btn.target.classList.remove('active');
     btn.target.style.display = 'none';
 };
