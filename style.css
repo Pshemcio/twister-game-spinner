@@ -18,6 +18,10 @@ input[type=number] {
     -moz-appearance: textfield;
 }
 
+button>* {
+    pointer-events: none;
+}
+
 :root {
     font-size: 1vw;
 }
@@ -32,15 +36,16 @@ input[type=number] {
     place-content: center;
 }
 
-.controls {
+#controls {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     margin-top: 4px;
 }
 
-.controls button,
-input {
+#controls button,
+input,
+.outer-btn {
     background-color: transparent;
     padding: 1rem;
     border: 1px solid white;
@@ -53,12 +58,12 @@ input {
     transition: background-color .4s;
 }
 
-.controls button::placeholder,
+#controls button::placeholder,
 input::placeholder {
     color: rgba(255, 255, 255, 0.6);
 }
 
-.controls button {
+#controls button {
     display: block;
     width: 10rem;
     cursor: pointer;
@@ -66,9 +71,11 @@ input::placeholder {
     margin: 0;
 }
 
-.controls button:hover,
-.controls button:focus,
-input:focus {
+#controls button:hover,
+#controls button:focus,
+input:focus,
+.outer-btn:hover,
+.outer-btn:focus {
     background-color: rgba(255, 255, 255, 0.3);
 }
 
@@ -81,6 +88,7 @@ ul,
 .time-stamp,
 .username {
     position: absolute;
+    left: 0;
     text-align: center;
     text-transform: uppercase;
     color: rgba(255, 255, 255, 0.8);
@@ -141,30 +149,112 @@ li {
     opacity: .9;
 }
 
-select {
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    text-indent: 1px;
+.outer-btn {
+    position: fixed;
+    top: 2rem;
+    z-index: 2;
+    font-size: 3rem;
+    width: 6rem;
+    height: 6rem;
+    cursor: pointer;
+    opacity: 0;
+    transition: opacity .3s;
+}
+
+.outer-btn.active {
+    opacity: 1;
+}
+
+#lang-btn {
+    left: 2rem;
+    font-size: 2.5rem;
+}
+
+#info-btn {
+    right: 2rem;
+}
+
+.hidden {
+    position: fixed;
+    top: 0;
+    z-index: 1;
+    width: 50%;
+    height: 100vh;
+    opacity: 0;
+    transition: opacity .4s, left .4s .1s, right .4s .1s, backdrop-filter .4s .35s;
 }
 
 #voice-select {
-    position: absolute;
-    top: 0;
+    left: -100vw;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: stretch;
+}
+
+#info {
+    right: -100vw;
+    font-size: 1.7rem;
+    color: white;
+    background: rgba(0, 0, 0, 0.2);
+    padding: 2rem;
+}
+
+#info * {
+    pointer-events: none;
+}
+
+#info p {
+    margin-bottom: 2rem;
+}
+
+#info ol {
+    margin-left: 4rem;
+}
+
+ol {
+    list-style: upper-roman;
+}
+
+li>ol {
+    list-style: lower-alpha;
+    font-size: 1.3rem;
+}
+
+ol li {
+    margin: 8px 0;
+}
+
+#voice-select.active,
+#info.active {
+    opacity: 1;
+    backdrop-filter: blur(3px);
+}
+
+#voice-select.active {
     left: 0;
-    background-color: rgba(255, 255, 255, 0.1);
-    border: none;
-    padding: 10px;
-    border-radius: 20px;
-    color: #333;
 }
 
-#voice-select:focus {
-    outline: none;
+#info.active {
+    right: 0;
 }
 
-#voice-select option {
-    background-color: transparent;
+#voice-select>* {
+    font-size: 1.6rem;
+    flex-basis: calc(100%/3);
+    display: grid;
+    place-content: center;
+    text-align: center;
+    padding: 1rem;
+    background: rgba(0, 0, 0, 0.2);
+    transition: background .5s;
 }
+
+#voice-select>*:hover {
+    background: rgba(0, 0, 0, 0);
+}
+
+
 
 @media (min-width:1500px) {
     :root {
@@ -174,17 +264,17 @@ select {
 
 @media (max-width:1200px) {
     :root {
-        font-size: 1.5vw;
+        font-size: 1vw;
     }
 
     input {
-        width: 80vw;
+        width: 60vw;
     }
 }
 
 @media (max-width:700px) {
     :root {
-        font-size: 2vw;
+        font-size: 1.6vw;
     }
 
     input {
@@ -193,6 +283,15 @@ select {
 
     .time-stamp {
         font-size: 6rem;
+    }
+
+    #voice-select {
+        width: 100%;
+    }
+
+    #voice-select>* {
+        font-size: 1.5rem;
+        flex-basis: calc(100%/2);
     }
 }
 

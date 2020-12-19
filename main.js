@@ -2,22 +2,27 @@ window.addEventListener('DOMContentLoaded', () => {
     timeInput.addEventListener("input", onlyNumbers);
     usernameInput.addEventListener('keyup', addUser);
     timeInput.addEventListener('keyup', addTime);
-    players.addEventListener('click', removeUser);
-    controls.addEventListener('click', handleBtnClick);
-    prepareSpeech();
+    document.body.addEventListener('click', handleClick);
+
+    setTimeout(() => {
+        prepareSpeech();
+    }, 1000);
 });
 
 const usernameInput = document.getElementById('username-input');
 const timeInput = document.getElementById('time-input');
 const usernameDisplay = document.getElementById('username-display');
 const infoDisplay = document.getElementById('info-display');
-const players = document.querySelector('.players-list');
+const players = document.getElementById('players-list');
 const timer = document.getElementById('timer');
 const errorMsg = document.getElementById('error-msg');
 const timeStamp = document.querySelector('.time-stamp');
 const units = document.getElementById('units');
-const controls = document.querySelector('.controls');
+const controls = document.getElementById('controls');
 const voiceSelect = document.getElementById('voice-select');
+const langBtn = document.getElementById('lang-btn');
+const hiddenMenu = document.getElementsByClassName('hidden');
+const info = document.getElementById('info');
 const synth = window.speechSynthesis;
 
 let dataObj = {
@@ -44,7 +49,7 @@ const checkLength = (input, max) => {
 };
 
 const addTime = input => {
-    const minTime = 1;
+    const minTime = 4;
 
     if (input.target.value < minTime || input.target.value >= 100) {
         input.target.classList.add('error');
@@ -201,12 +206,33 @@ const handleReset = () => {
     clearInterval($timerInterval);
 };
 
+// showing hidden menu and hiding button
+const showHiddenMenu = button => {
+    button.target.closest('.js-menu').querySelector('.hidden').classList.add('active');
+    button.target.classList.remove('active');
+    setTimeout(() => {
+        button.target.style.display = 'none';
+    }, 400);
+};
+
+const selectVoice = item => {
+    langBtn.setAttribute('data-name', item.target.getAttribute('data-name'));
+    voiceSelect.classList.remove('active');
+    langBtn.style.display = 'block';
+    langBtn.classList.add('active');
+    langBtn.innerText = item.target.getAttribute('data-lang').slice(3,)
+};
+
 const prepareSpeech = () => {
     function populateVoiceList() {
         voices = synth.getVoices();
 
         for (let i = 0; i < voices.length; i++) {
-            let option = document.createElement('option');
+            if (langBtn.getAttribute('data-name') === null) {
+                langBtn.setAttribute('data-name', voices[0].name);
+            };
+
+            let option = document.createElement('li');
             let text = voices[i].name.slice(7) + ' (' + voices[i].lang + ')';
 
             option.textContent = text;
@@ -215,22 +241,63 @@ const prepareSpeech = () => {
             option.setAttribute('data-lang', voices[i].lang);
             option.setAttribute('data-name', voices[i].name);
             voiceSelect.appendChild(option);
-        }
-    }
+        };
+    };
 
     populateVoiceList();
-    if (speechSynthesis.onvoiceschanged !== undefined) {
-        speechSynthesis.onvoiceschanged = populateVoiceList;
-    };
 };
 
 const handleSpeech = (name, order) => {
     let utterThis = new SpeechSynthesisUtterance(`${name}, ${order}`);
-    let selectedOption = voiceSelect.selectedOptions[0].getAttribute('data-name');
+    let selectedOption = langBtn.getAttribute('data-name');
+
     for (let i = 0; i < voices.length; i++) {
         if (voices[i].name === selectedOption) {
             utterThis.voice = voices[i];
         };
     };
     synth.speak(utterThis);
+};
+
+const hideMenu = menu => {
+    const btn = menu.parentElement.querySelector('.outer-btn');
+    btn.style.display = 'block';
+    menu.classList.remove('active');
+    setTimeout(() => {
+        btn.classList.add('active');
+    }, 100);
+};
+
+const closeAfterClickOutside = (clickTarget) => {
+    for (let i = 0; i < hiddenMenu.length; i++) {
+        const menu = hiddenMenu[i];
+        if (menu.classList.contains('active')) {
+            if (clickTarget.target.closest('section') === null) {
+                hideMenu(menu);
+            };
+        };
+    };
+};
+
+const handleClick = clickTarget => {
+    switch (clickTarget.target.parentElement) {
+        case players:
+            removeUser(clickTarget);
+            break;
+        case controls:
+            handleBtnClick(clickTarget);
+            break;
+        case voiceSelect:
+            selectVoice(clickTarget);
+            break;
+        default:
+            if (clickTarget.target === info) {
+                hideMenu(info);
+            } else if (clickTarget.target.nodeName == "BUTTON" && clickTarget.target.parentElement.className === 'js-menu') {
+                showHiddenMenu(clickTarget);
+            } else {
+                closeAfterClickOutside(clickTarget);
+            };
+            break;
+    };
 };

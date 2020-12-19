@@ -13,10 +13,14 @@
 
 <body>
     <div class="wrapper">
-        <select id="voice-select">
-            <option selected disabled>Zmień język!</option>
-        </select>
-        <div class="container">
+        <section class="js-menu">
+            <button id="lang-btn" class="outer-btn active">
+                <i class="fas fa-globe-americas"></i>
+            </button>
+            <ul id="voice-select" class="hidden">
+            </ul>
+        </section>
+        <header class="container">
             <div class="player-info">
                 <p id="error-msg" class="js-reset"></p>
                 <input id="username-input" type="text" placeholder="Wpisz imię gracza">
@@ -24,20 +28,113 @@
             <div class="interval-input">
                 <input id="time-input" type="number" placeholder="Podaj czas rundy">
             </div>
-            <div class="controls">
+            <div id="controls">
                 <button id="start">Start!</button>
                 <button id="stop">Stop</button>
                 <button id="reset">Reset</button>
             </div>
-        </div>
-        <p id="username-display" class="username js-reset"></p>
-        <p id="info-display" class="info js-reset"></p>
-        <ul class="players-list">
-        </ul>
-        <p class="time-stamp">
-            <span id="timer" class="js-reset"></span><span id="units" class="js-reset"></span>
-        </p>
+        </header>
+        <section class="variables">
+            <p id="username-display" class="username js-reset"></p>
+            <p id="info-display" class="info js-reset"></p>
+            <ul id="players-list">
+            </ul>
+            <p class="time-stamp">
+                <span id="timer" class="js-reset"></span><span id="units" class="js-reset"></span>
+            </p>
+        </section>
+        <section class="js-menu">
+            <button id="info-btn" class="outer-btn active">
+                <i class="fas fa-info"></i>
+            </button>
+            <div id="info" class="hidden">
+                <div class="inner-wrap">
+                    <h2>Nie ogarniasz?</h2>
+                    <p>Te instrukcje są specjalnie dla Ciebie!</p>
+                    <ol>
+                        <li>
+                            Wpisz nazwę gracza, potwierdź naciskając enter.
+                            <ol>
+                                <li>
+                                    Nazwa gracza musi mieć conajmniej jedną literę.
+                                </li>
+                                <li>
+                                    Minimalna liczba graczy to 1.
+                                </li>
+                                <li>
+                                    Maksymalna liczba graczy to 4.
+                                </li>
+                            </ol>
+                        </li>
+                        <li>
+                            ABY USUNĄĆ GRACZA NALEŻY KLIKNĄĆ JEGO NAZWĘ W LEWYM DOLNYM ROGU EKRANU
+                        </li>
+                        <li>
+                            Wpisz czas rundy w polu 'PODAJ CZAS RUNDY', potwierdź naciskając enter.
+                            <ol>
+                                <li>
+                                    Wpisz czas w sekundach.
+                                </li>
+                                <li>
+                                    Minimalna wartość to 4.
+                                </li>
+                                <li>
+                                    Maksymalna wartość to 99.
+                                </li>
+                            </ol>
+                        </li>
+                        <li>
+                            Kliknięcie przycisku START!
+                            <ol>
+                                <li>
+                                    Rozpoczyna odliczanie, jego długość jest zależna od czasu rundy.
+                                </li>
+                                <li>
+                                    Po zakończeniu odliczania gra się rozpoczyna od pierwszego zawodnika.
+                                </li>
+                            </ol>
+                        </li>
+                        <li>
+                            Kliknięcie przycisku STOP
+                            <ol>
+                                <li>
+                                    Zatrzymuje grę.
+                                </li>
+                                <li>
+                                    Grę startujemy ponownie klikając przycisk START! .
+                                </li>
+                            </ol>
+                        </li>
+                        <li>
+                            Kliknięcie przycisku RESET
+                            <ol>
+                                <li>
+                                    Zatrzymuje grę, zeruje licznik i usuwa wszystkich graczy.
+                                </li>
+                                <li>
+                                    Po jego kliknięciu należy ponownie wprowadzić wszystkie dane.
+                                </li>
+                            </ol>
+                        </li>
+                        <li>
+                            Przycisk <i class="fas fa-globe-americas"></i>
+
+                            <ol>
+                                <li>
+                                    Po jego kliknięciu pojawi się lista dostępnych języków mowy.
+                                </li>
+                                <li>
+                                    Aby zmienić język wybierz go z wyświetlonej listy.
+                                </li>
+                            </ol>
+                        </li>
+                    </ol>
+                    <h2>Powodzenia!</h3>
+                </div>
+            </div>
+        </section>
     </div>
+    <script src="https://kit.fontawesome.com/a330ae9e9c.js" crossorigin="anonymous"></script>
     <script src="main.js"></script>
 </body>
 
