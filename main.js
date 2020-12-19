@@ -6,7 +6,7 @@ window.addEventListener('DOMContentLoaded', () => {
 
     setTimeout(() => {
         populateVoiceList()
-    }, 2000);
+    }, 1000);
 });
 
 const usernameInput = document.getElementById('username-input');
@@ -29,10 +29,10 @@ let dataObj = {
     players: [],
     colors: ['zielony', 'żółty', 'niebieski', 'czerwony'],
     bodyParts: ['lewa ręka', 'prawa ręka', 'lewa noga', 'prawa noga'],
-    time: 0,
-    voices: []
+    time: 0
 };
 
+let $voices = [];
 let $timerInterval;
 
 const onlyNumbers = input => {
@@ -224,21 +224,21 @@ const selectVoice = item => {
 };
 
 function populateVoiceList() {
-    voices = synth.getVoices();
+    $voices = synth.getVoices();
 
-    for (let i = 0; i < voices.length; i++) {
+    for (let i = 0; i < $voices.length; i++) {
         if (langBtn.getAttribute('data-name') === null) {
-            langBtn.setAttribute('data-name', voices[0].name);
+            langBtn.setAttribute('data-name', $voices[0].name);
             langBtn.classList.add('active');
         };
 
         let option = document.createElement('li');
-        let text = `${voices[i].name.slice(7)}  (${voices[i].lang})`;
+        let text = `${$voices[i].name.slice(7)}  (${$voices[i].lang})`;
 
         option.textContent = text;
 
-        option.setAttribute('data-lang', voices[i].lang);
-        option.setAttribute('data-name', voices[i].name);
+        option.setAttribute('data-lang', $voices[i].lang);
+        option.setAttribute('data-name', $voices[i].name);
         voiceSelect.appendChild(option);
     };
 };
@@ -247,9 +247,9 @@ const handleSpeech = (name, order) => {
     let utterThis = new SpeechSynthesisUtterance(`${name}, ${order}`);
     let selectedOption = langBtn.getAttribute('data-name');
 
-    for (let i = 0; i < voices.length; i++) {
-        if (voices[i].name === selectedOption) {
-            utterThis.voice = voices[i];
+    for (let i = 0; i < $voices.length; i++) {
+        if ($voices[i].name === selectedOption) {
+            utterThis.voice = $voices[i];
         };
     };
     synth.speak(utterThis);
