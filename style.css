@@ -212,9 +212,14 @@ li {
     opacity: 1;
 }
 
-#lang-btn {
+#lang-btn,
+#sound-agreement {
     left: 2rem;
     font-size: 2.5rem;
+}
+
+#sound-agreement {
+    z-index: 3;
 }
 
 #info-btn {

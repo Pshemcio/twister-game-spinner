@@ -3,10 +3,9 @@ window.addEventListener('DOMContentLoaded', () => {
     usernameInput.addEventListener('keyup', addUser);
     timeInput.addEventListener('keyup', addTime);
     document.body.addEventListener('click', handleClick);
-
-    setTimeout(() => {
-        speechSynthesis.addEventListener('voiceschanged', populateVoiceList);
-    }, 1000);
+    // speechSynthesis.addEventListener('voiceschanged', populateVoiceList);
+    // document.addEventListener('click', test);
+    soundAgreementBtn.addEventListener('click', userSoundAgreement);
 });
 
 const usernameInput = document.getElementById('username-input');
@@ -23,7 +22,7 @@ const voiceSelect = document.getElementById('voice-select');
 const langBtn = document.getElementById('lang-btn');
 const hiddenMenu = document.getElementsByClassName('hidden');
 const info = document.getElementById('info');
-// const synth = window.speechSynthesis;
+const soundAgreementBtn = document.getElementById('sound-agreement');
 
 let dataObj = {
     players: [],
@@ -34,6 +33,7 @@ let dataObj = {
 
 let $voices = [];
 let $timerInterval;
+let hasEnabledVoice = false;
 
 const onlyNumbers = input => {
     input.target.value = input.target.value.replace(/[E\+\-]/gi, "");
@@ -281,7 +281,6 @@ const closeAfterClickOutside = (clickTarget) => {
 };
 
 const handleClick = clickTarget => {
-    console.log(clickTarget.target)
     switch (clickTarget.target.parentElement) {
         case players:
             removeUser(clickTarget);
@@ -304,4 +303,20 @@ const handleClick = clickTarget => {
             };
             break;
     };
+};
+
+const userSoundAgreement = btn => {
+    if (hasEnabledVoice) {
+        return;
+    };
+
+    let lecture = new SpeechSynthesisUtterance();
+    lecture.volume = 1;
+    lecture.text = 'Dzięki, możemy grać!'
+    speechSynthesis.speak(lecture);
+    hasEnabledVoice = true;
+    console.log('dziala')
+    speechSynthesis.addEventListener('voiceschanged', populateVoiceList);
+    btn.target.classList.remove('avtive');
+    btn.target.style.display = 'none';
 };
