@@ -197,7 +197,7 @@ li {
 .outer-btn {
     position: fixed;
     top: 2rem;
-    z-index: 2;
+    z-index: 1;
     font-size: 3rem;
     width: 6rem;
     height: 6rem;
@@ -206,21 +206,21 @@ li {
     -webkit-transition: opacity .3s;
     -o-transition: opacity .3s;
     transition: opacity .3s;
+    pointer-events: none;
 }
 
 .outer-btn.active {
     opacity: 1;
-    z-index: 5;
+    pointer-events: all;
 }
 
-#lang-btn,
-#sound-agreement {
+#lang-btn {
     left: 2rem;
     font-size: 2.5rem;
 }
 
-#sound-agreement {
-    z-index: 3;
+#sound-agreement.active {
+    left: 10rem;
 }
 
 #info-btn {
