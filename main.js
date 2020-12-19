@@ -220,15 +220,15 @@ const userSoundAgreement = btn => {
         return;
     };
 
-    speechSynthesis.addEventListener('voiceschanged', populateVoiceList);
-
     let lecture = new SpeechSynthesisUtterance();
     lecture.text = 'Dzięki, możemy grać!'
-    speechSynthesis.speak(lecture);
     hasEnabledVoice = true;
     btn.target.classList.remove('active');
     btn.target.style.display = 'none';
     langBtn.classList.add('active');
+    speechSynthesis.speak(lecture);
+    populateVoiceList();
+    speechSynthesis.addEventListener('voiceschanged', populateVoiceList);
 };
 
 function populateVoiceList() {
@@ -240,7 +240,8 @@ function populateVoiceList() {
 
     $voices.forEach(voice => {
         let option = document.createElement('li');
-        let text = `${voice.name.slice(7)}  (${voice.lang})`;
+        let text = `${voice.name} (${voice.lang})`;
+        // let text = `${voice.name.slice(7)}  (${voice.lang})`;
 
         option.textContent = text;
 
@@ -259,6 +260,12 @@ const selectVoice = item => {
 };
 
 const handleSpeech = (name, order) => {
+    if ($voices[0] === undefined) {
+        return;
+    } else if (langBtn.getAttribute('data-name') === null) {
+        langBtn.setAttribute('data-name', $voices[0].name);
+    };
+
     let utterThis = new SpeechSynthesisUtterance();
     utterThis.text = `${name}, ${order}`;
     let selectedOption = langBtn.getAttribute('data-name');
