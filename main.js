@@ -6,7 +6,7 @@ window.addEventListener('DOMContentLoaded', () => {
 
     setTimeout(() => {
         populateVoiceList()
-    }, 1000);
+    }, 2000);
 });
 
 const usernameInput = document.getElementById('username-input');
@@ -229,21 +229,18 @@ function populateVoiceList() {
     for (let i = 0; i < voices.length; i++) {
         if (langBtn.getAttribute('data-name') === null) {
             langBtn.setAttribute('data-name', voices[0].name);
+            langBtn.classList.add('active');
         };
 
         let option = document.createElement('li');
-        let text = voices[i].name.slice(7) + ' (' + voices[i].lang + ')';
+        let text = `${voices[i].name.slice(7)}  (${voices[i].lang})`;
 
         option.textContent = text;
-        console.log(voices[i].name.slice(7));
 
         option.setAttribute('data-lang', voices[i].lang);
         option.setAttribute('data-name', voices[i].name);
         voiceSelect.appendChild(option);
     };
-
-    alert(window.innerWidth);
-    alert(window.innerHeight);
 };
 
 const handleSpeech = (name, order) => {
@@ -279,6 +276,7 @@ const closeAfterClickOutside = (clickTarget) => {
 };
 
 const handleClick = clickTarget => {
+    console.log(clickTarget.target)
     switch (clickTarget.target.parentElement) {
         case players:
             removeUser(clickTarget);
@@ -292,6 +290,8 @@ const handleClick = clickTarget => {
         default:
             if (clickTarget.target === info) {
                 hideMenu(info);
+            } else if (clickTarget.target === voiceSelect) {
+                hideMenu(voiceSelect);
             } else if (clickTarget.target.nodeName == "BUTTON" && clickTarget.target.parentElement.className === 'js-menu') {
                 showHiddenMenu(clickTarget);
             } else {
