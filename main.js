@@ -5,7 +5,7 @@ window.addEventListener('DOMContentLoaded', () => {
     document.body.addEventListener('click', handleClick);
 
     setTimeout(() => {
-        populateVoiceList()
+        speechSynthesis.addEventListener('voiceschanged', populateVoiceList);
     }, 1000);
 });
 
@@ -23,7 +23,7 @@ const voiceSelect = document.getElementById('voice-select');
 const langBtn = document.getElementById('lang-btn');
 const hiddenMenu = document.getElementsByClassName('hidden');
 const info = document.getElementById('info');
-const synth = window.speechSynthesis;
+// const synth = window.speechSynthesis;
 
 let dataObj = {
     players: [],
@@ -215,6 +215,30 @@ const showHiddenMenu = button => {
     }, 400);
 };
 
+function populateVoiceList() {
+    if ($voices.length > 0) {
+        return;
+    };
+
+    $voices = speechSynthesis.getVoices();
+
+    $voices.forEach(voice => {
+        if (langBtn.getAttribute('data-name') === null) {
+            langBtn.setAttribute('data-name', $voices[0].name);
+            langBtn.classList.add('active');
+        };
+
+        let option = document.createElement('li');
+        let text = `${voice.name.slice(7)}  (${voice.lang})`;
+
+        option.textContent = text;
+
+        option.setAttribute('data-lang', voice.lang);
+        option.setAttribute('data-name', voice.name);
+        voiceSelect.appendChild(option);
+    });
+};
+
 const selectVoice = item => {
     langBtn.setAttribute('data-name', item.target.getAttribute('data-name'));
     voiceSelect.classList.remove('active');
@@ -223,28 +247,9 @@ const selectVoice = item => {
     langBtn.innerText = item.target.getAttribute('data-lang').slice(3,)
 };
 
-function populateVoiceList() {
-    $voices = synth.getVoices();
-
-    for (let i = 0; i < $voices.length; i++) {
-        if (langBtn.getAttribute('data-name') === null) {
-            langBtn.setAttribute('data-name', $voices[0].name);
-            langBtn.classList.add('active');
-        };
-
-        let option = document.createElement('li');
-        let text = `${$voices[i].name.slice(7)}  (${$voices[i].lang})`;
-
-        option.textContent = text;
-
-        option.setAttribute('data-lang', $voices[i].lang);
-        option.setAttribute('data-name', $voices[i].name);
-        voiceSelect.appendChild(option);
-    };
-};
-
 const handleSpeech = (name, order) => {
-    let utterThis = new SpeechSynthesisUtterance(`${name}, ${order}`);
+    let utterThis = new SpeechSynthesisUtterance();
+    utterThis.text = `${name}, ${order}`;
     let selectedOption = langBtn.getAttribute('data-name');
 
     for (let i = 0; i < $voices.length; i++) {
@@ -252,7 +257,7 @@ const handleSpeech = (name, order) => {
             utterThis.voice = $voices[i];
         };
     };
-    synth.speak(utterThis);
+    speechSynthesis.speak(utterThis);
 };
 
 const hideMenu = menu => {
