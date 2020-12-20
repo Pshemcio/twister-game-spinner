@@ -141,7 +141,7 @@ const handleStart = button => {
         return;
     };
 
-    if (button.target.classList.contains('active')) {
+    if (controls.classList.contains('active')) {
         return;
     };
 
@@ -201,6 +201,7 @@ const handleReset = () => {
         player.remove();
     });
 
+    controls.classList.remove('active');
     clearInterval($timerInterval);
 };
 
