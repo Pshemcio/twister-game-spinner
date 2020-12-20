@@ -217,6 +217,7 @@ li {
 #lang-btn {
     left: 2rem;
     font-size: 2.5rem;
+    overflow: hidden;
 }
 
 #sound-agreement.active {

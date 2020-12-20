@@ -3,8 +3,6 @@ window.addEventListener('DOMContentLoaded', () => {
     usernameInput.addEventListener('keyup', addUser);
     timeInput.addEventListener('keyup', addTime);
     document.body.addEventListener('click', handleClick);
-    // speechSynthesis.addEventListener('voiceschanged', populateVoiceList);
-    // document.addEventListener('click', test);
     soundAgreementBtn.addEventListener('click', userSoundAgreement);
 });
 
@@ -221,7 +219,7 @@ const userSoundAgreement = btn => {
     };
 
     let lecture = new SpeechSynthesisUtterance();
-    lecture.text = 'Dzięki, możemy grać!'
+    lecture.text = 'Wybierz język z listy obok'
     hasEnabledVoice = true;
     btn.target.classList.remove('active');
     btn.target.style.display = 'none';
@@ -241,7 +239,6 @@ function populateVoiceList() {
     $voices.forEach(voice => {
         let option = document.createElement('li');
         let text = `${voice.name} (${voice.lang})`;
-        // let text = `${voice.name.slice(7)}  (${voice.lang})`;
 
         option.textContent = text;
 
@@ -257,6 +254,12 @@ const selectVoice = item => {
     langBtn.classList.add('active');
     langBtn.innerText = item.target.getAttribute('data-lang').slice(3,)
     voiceSelect.classList.remove('active');
+
+    speechSynthesis.addEventListener('voiceschanged', () => {
+        $voices = speechSynthesis.getVoices();
+    });
+
+    handleSpeech('ok!', '');
 };
 
 const handleSpeech = (name, order) => {
