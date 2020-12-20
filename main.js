@@ -47,7 +47,7 @@ const checkLength = (input, max) => {
 };
 
 const addTime = input => {
-    const minTime = 4;
+    const minTime = 3;
 
     if (input.target.value < minTime || input.target.value >= 100) {
         input.target.classList.add('error');
@@ -271,7 +271,7 @@ const handleSpeech = (name, order) => {
     };
 
     let utterThis = new SpeechSynthesisUtterance();
-    utterThis.text = `${name}, ${order}`;
+    utterThis.text = `${name} ${order}`;
     let selectedOption = langBtn.getAttribute('data-name');
 
     for (let i = 0; i < $voices.length; i++) {
